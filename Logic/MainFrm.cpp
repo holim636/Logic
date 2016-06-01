@@ -6,6 +6,9 @@
 #include "Logic.h"
 
 #include "MainFrm.h"
+#include "LogicDoc.h"
+#include "LogicView.h"
+#include "KeyInputView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -17,6 +20,7 @@ IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
+	ON_WM_GETMINMAXINFO()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -66,6 +70,18 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
+BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
+	CCreateContext* pContext)
+{
+	m_wndSplitter.CreateStatic(this, 1, 2);
+	m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(CLogicView),
+		CSize(1000, 1000), pContext);
+	m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CKeyInputView),
+		CSize(1000, 1000), pContext);
+	SetActiveView((CView *)m_wndSplitter.GetPane(0, 0));
+	return TRUE;
+}
+
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	if( !CFrameWnd::PreCreateWindow(cs) )
@@ -93,3 +109,15 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 // CMainFrame 메시지 처리기
 
+
+void CMainFrame::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
+{
+	lpMMI->ptMinTrackSize.x = 1200;
+	lpMMI->ptMinTrackSize.y = 800;
+	lpMMI->ptMaxTrackSize.x = 1200;
+	lpMMI->ptMaxTrackSize.y = 800;
+
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CFrameWnd::OnGetMinMaxInfo(lpMMI);
+}

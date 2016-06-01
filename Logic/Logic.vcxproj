@@ -99,6 +99,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KeyInputView.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="LogicDoc.h" />
     <ClInclude Include="LogicView.h" />
@@ -108,6 +109,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="KeyInputView.cpp" />
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="LogicDoc.cpp" />
     <ClCompile Include="LogicView.cpp" />
@@ -124,6 +126,14 @@
     <None Include="res\Logic.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="C:\Users\user\Desktop\Chapter10\logic\res\bitmap1.bmp" />
+    <Image Include="C:\Users\user\Desktop\Chapter10\logic\res\bitmap2.bmp" />
+    <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\bitmap2.bmp" />
+    <Image Include="res\bitmap3.bmp" />
+    <Image Include="res\bitmap4.bmp" />
+    <Image Include="res\bitmap5.bmp" />
+    <Image Include="res\bitmap6.bmp" />
     <Image Include="res\Logic.ico" />
     <Image Include="res\LogicDoc.ico" />
     <Image Include="res\Toolbar.bmp" />
@@ -131,4 +141,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="Logic.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
