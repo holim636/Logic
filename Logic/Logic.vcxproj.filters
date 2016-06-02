@@ -101,11 +101,5 @@
     <Image Include="res\bitmap6.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="C:\Users\user\Desktop\Chapter10\logic\res\bitmap1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="C:\Users\user\Desktop\Chapter10\logic\res\bitmap2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
   </ItemGroup>
 </Project>

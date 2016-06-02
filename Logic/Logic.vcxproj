@@ -126,8 +126,6 @@
     <None Include="res\Logic.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="C:\Users\user\Desktop\Chapter10\logic\res\bitmap1.bmp" />
-    <Image Include="C:\Users\user\Desktop\Chapter10\logic\res\bitmap2.bmp" />
     <Image Include="res\bitmap1.bmp" />
     <Image Include="res\bitmap2.bmp" />
     <Image Include="res\bitmap3.bmp" />
