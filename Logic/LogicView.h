@@ -26,6 +26,7 @@ public:
 	CPoint m_p;
 	CPoint m_p2;
 	BOOL m_bTrack;
+	bool m_button1;
 // 재정의입니다.
 public:
 	virtual void OnDraw(CDC* pDC);  // 이 뷰를 그리기 위해 재정의되었습니다.

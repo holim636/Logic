@@ -55,12 +55,22 @@ BOOL CLogicView::PreCreateWindow(CREATESTRUCT& cs)
 
 // CLogicView 그리기
 
-void CLogicView::OnDraw(CDC* /*pDC*/)
+void CLogicView::OnDraw(CDC* pDC)
 {
+	CClientDC dc(this);
 	CLogicDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
+
+	CRect Rect;
+	GetClientRect(&Rect);
+	CBrush Brush(HS_CROSS, RGB(234, 234, 234));
+	dc.SelectObject(&Brush);
+	dc.Rectangle(&Rect);
+	Rect.SetRectEmpty();
+	Rect.SetRect(0, 0, 5, 5);
+
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 }
@@ -177,6 +187,8 @@ void CLogicView::OnLButtonUp(UINT nFlags, CPoint point)
 	dc.LineTo(point.x, point.y);
 
 	m_bTrack = FALSE;
+
+	
 	CView::OnLButtonUp(nFlags, point);
 }
 
