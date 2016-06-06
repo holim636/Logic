@@ -77,3 +77,4 @@ inline CLogicDoc* CLogicView::GetDocument() const
    { return reinterpret_cast<CLogicDoc*>(m_pDocument); }
 #endif
 
+int box(int x);
