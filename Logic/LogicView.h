@@ -26,13 +26,25 @@ public:
 	CPoint m_p;
 	CPoint m_p2;
 	BOOL m_bTrack;
-	bool m_button1;
+	CPoint point;
+
+	BITMAP bmpinfo1, bmpinfo2, bmpinfo3, bmpinfo4, bmpinfo5, bmpinfo6;
+	CDC dcmem1, dcmem2, dcmem3, dcmem4, dcmem5, dcmem6;
+
+	int m_nBoard[500][500];
+
+	bool m_nButtonDown;
+	bool m_nButtonUp;
+
+	
+
 // 재정의입니다.
 public:
 	virtual void OnDraw(CDC* pDC);  // 이 뷰를 그리기 위해 재정의되었습니다.
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	
 protected:
-
+	
 // 구현입니다.
 public:
 	virtual ~CLogicView();
@@ -56,6 +68,8 @@ public:
 	afx_msg void On32775();
 	afx_msg void On32776();
 	afx_msg void On32777();
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnDestroy();
 };
 
 #ifndef _DEBUG  // LogicView.cpp의 디버그 버전
