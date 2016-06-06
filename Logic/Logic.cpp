@@ -23,6 +23,7 @@ BEGIN_MESSAGE_MAP(CLogicApp, CWinApp)
 	// 표준 파일을 기초로 하는 문서 명령입니다.
 	ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
+	
 END_MESSAGE_MAP()
 
 
@@ -156,6 +157,9 @@ void CLogicApp::OnAppAbout()
 }
 
 // CLogicApp 메시지 처리기
+
+
+
 
 
 
