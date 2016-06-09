@@ -8,12 +8,33 @@
 
 #define IDC_LIST1 100
 // CKeyInputView
-
 IMPLEMENT_DYNCREATE(CKeyInputView, CView)
+
+typedef class UNIT{
+private:
+	int state = 0;//상태
+	int gate1 = 0;
+	int gate2 = 0;
+	int clk;
+public:
+	POINT next;
+	int type;
+	int gateIn1(int a){ gate1 = a; }
+	int gateIn2(int a){ gate2 = a; }
+	int output();
+}unit;//실행용 스트럭트
+typedef struct BOARD{
+	int type = 0;
+	int face = 0;
+	POINT next;//7일경우 다음 좌표값 저장
+	unit* unit;
+}Board;
+
+extern Board board[1200][800];
 
 CKeyInputView::CKeyInputView()
 {
-
+	
 }
 
 CKeyInputView::~CKeyInputView()

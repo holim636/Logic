@@ -1,6 +1,5 @@
 #pragma once
 
-
 // CKeyInputView ∫‰¿‘¥œ¥Ÿ.
 
 class CKeyInputView : public CView

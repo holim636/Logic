@@ -4,7 +4,6 @@
 
 #pragma once
 
-
 class CLogicView : public CView
 {
 protected: // serialization에서만 만들어집니다.
@@ -30,8 +29,6 @@ public:
 
 	BITMAP bmpinfo1, bmpinfo2, bmpinfo3, bmpinfo4, bmpinfo5, bmpinfo6;
 	CDC dcmem1, dcmem2, dcmem3, dcmem4, dcmem5, dcmem6;
-
-	int m_nBoard[500][500];
 
 	bool m_nButtonDown;
 	bool m_nButtonUp;

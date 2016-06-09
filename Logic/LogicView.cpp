@@ -18,30 +18,43 @@
 #define and 1
 #define or 2
 #define not 3
-typedef struct BOARD{
-	int type;
-	int face;
-}Board;
-typedef struct UNIT{
-	int type; //타입
-	int pointx;
-	int pointy;//좌표
-	int state;//상태
-	int gate1;
-	int gate2;
+
+typedef class UNIT{
+private:
+	int state = 0;//상태
+	int gate1 = 0;
+	int gate2 = 0;
 	int clk;
-	int output1;
-	int output2;
+public:
+	POINT next;
+	int type;
+	int gateIn1(int a){ gate1 = a; }
+	int gateIn2(int a){ gate2 = a; }
+	int output();
 }unit;//실행용 스트럭트
-class electric : public CPtrList{
-private :
-	unit Unit;
-
-
-};
-
-
-Board board[1200][800] = {0,};//좌표 추적용 보드
+typedef struct BOARD{
+	int type = 0;
+	int face = 0;
+	POINT next;//7일경우 다음 좌표값 저장
+	unit* unit;
+}Board;
+Board board[1200][800];//좌표 추적용 보드
+int unit::output(){
+	switch (type){
+	case 1: if (gate1&&gate2){ state = 1; return 1; }
+			else{ state = 0; return 0; }
+	case 2: if (gate1 || gate2){ state = 1; return 1; }
+			else{ state = 0; return 0; }
+	case 3: if (gate1&&gate2){ state = 0; return 0; }
+			else{ state = 1; return 1; }
+	case 4: if (gate1 != gate2){ state = 1; return 1; }
+			else state = 0; return 0;
+	case 5: if (gate1 == gate2){ state = 1; return 1; }
+			else state = 0; return 0;
+	case 6: if (gate1 == 1) { state = 1;  return 0; }
+			else state = 1; return 1;
+	}
+}
 // CLogicView
 
 IMPLEMENT_DYNCREATE(CLogicView, CView)
@@ -185,34 +198,48 @@ void CLogicView::OnLButtonDown(UINT nFlags, CPoint point)
 			if (button1 == 1 ){
 				button1 = 0;
 				board[box(point.x)][box(point.y)].type = 1;
+				unit* p = new unit;
+				p->type = 1;
+				board[box(point.x)][box(point.y)].unit = p;
 			}
 			if (button2 == 1){
 				button2 = 0;
 				board[box(point.x)][box(point.y)].type = 2;
+				unit* p = new unit;
+				p->type = 2;
+				board[box(point.x)][box(point.y)].unit = p;
 			}
 			if (button3 == 1){
 				button3 = 0;
 				board[box(point.x)][box(point.y)].type = 3;
+				unit* p = new unit;
+				p->type = 3;
+				board[box(point.x)][box(point.y)].unit = p;
 			}
 			if (button4 == 1){
-				dc.TransparentBlt(point.x, point.y, bmpinfo4.bmWidth, bmpinfo4.bmHeight, &dcmem4, 0, 0, bmpinfo4.bmWidth, bmpinfo4.bmHeight, RGB(255, 255, 255));
 				button4 = 0;
-
+				board[box(point.x)][box(point.y)].type = 4;
+				unit* p = new unit;
+				p->type = 4;
+				board[box(point.x)][box(point.y)].unit = p;
 			}
 			if (button5 == 1){
-				dc.TransparentBlt(point.x, point.y, bmpinfo5.bmWidth, bmpinfo5.bmHeight, &dcmem5, 0, 0, bmpinfo5.bmWidth, bmpinfo5.bmHeight, RGB(255, 255, 255));
 				button5 = 0;
-	
-			
+				board[box(point.x)][box(point.y)].type = 5;
+				unit* p = new unit;
+				p->type = 5;
+				board[box(point.x)][box(point.y)].unit = p;
 			}
 			if (button6 == 1){
-				dc.TransparentBlt(point.x, point.y, bmpinfo1.bmWidth, bmpinfo6.bmHeight, &dcmem6, 0, 0, bmpinfo6.bmWidth, bmpinfo6.bmHeight, RGB(255, 255, 255));
 				button6 = 0;
+				board[box(point.x)][box(point.y)].type = 6;
+				unit* p = new unit;
+				p->type = 6;
+				board[box(point.x)][box(point.y)].unit = p;
 			}
 			
-	m_p2.x = m_p.x = point.x;
-
-	m_p2.y = m_p.y = point.y;
+	m_p2.x = m_p.x = box(point.x);
+	m_p2.y = m_p.y = box(point.y);
 
 	m_bTrack = TRUE;
 	int i, j;
@@ -224,6 +251,10 @@ void CLogicView::OnLButtonDown(UINT nFlags, CPoint point)
 			case 1: dc.TransparentBlt(i, j, bmpinfo1.bmWidth, bmpinfo1.bmHeight, &dcmem1, 0, 0, bmpinfo1.bmWidth, bmpinfo1.bmHeight, RGB(255, 255, 255)); break;
 			case 2: dc.TransparentBlt(i,j, bmpinfo2.bmWidth, bmpinfo2.bmHeight, &dcmem2, 0, 0, bmpinfo2.bmWidth, bmpinfo2.bmHeight, RGB(255, 255, 255)); break;
 			case 3: dc.TransparentBlt(i, j, bmpinfo3.bmWidth, bmpinfo3.bmHeight, &dcmem3, 0, 0, bmpinfo3.bmWidth, bmpinfo3.bmHeight, RGB(255, 255, 255)); break;
+			case 4: dc.TransparentBlt(i, j, bmpinfo4.bmWidth, bmpinfo4.bmHeight, &dcmem4, 0, 0, bmpinfo4.bmWidth, bmpinfo4.bmHeight, RGB(255, 255, 255)); break;
+			case 5: dc.TransparentBlt(i, j, bmpinfo5.bmWidth, bmpinfo5.bmHeight, &dcmem5, 0, 0, bmpinfo5.bmWidth, bmpinfo5.bmHeight, RGB(255, 255, 255)); break;
+			case 6: dc.TransparentBlt(i, j, bmpinfo1.bmWidth, bmpinfo6.bmHeight, &dcmem6, 0, 0, bmpinfo6.bmWidth, bmpinfo6.bmHeight, RGB(255, 255, 255)); break;
+			
 			}
 		}
 	}
@@ -238,7 +269,7 @@ void CLogicView::OnLButtonUp(UINT nFlags, CPoint point)
 	CClientDC dc(this);
 	dc.MoveTo(m_p.x, m_p.y);
 
-	dc.LineTo(point.x, point.y);
+	dc.LineTo(box(point.x), box(point.y));
 
 	m_bTrack = FALSE;
 	
@@ -256,10 +287,10 @@ void CLogicView::OnMouseMove(UINT nFlags, CPoint point)
 		pDc->MoveTo(m_p.x, m_p.y);
 		pDc->LineTo(m_p2.x, m_p2.y);
 		pDc->MoveTo(m_p.x, m_p.y);
-		pDc->LineTo(point.x, point.y);
+		pDc->LineTo(box(point.x), box(point.y));
 		ReleaseDC(pDc);
-		m_p2 = point;
-
+		m_p2.x = box(point.x);
+		m_p2.y = box(point.y);
 	
 	
 		
@@ -366,4 +397,19 @@ int box(int x)
 	a = x % 10;
 	x = x - a;
 	return x;
+}
+
+int search1(int x, int y)
+{
+	if (board[x - 40][y - 20].type != 0 && board[x - 40][y - 20].face == 0 && board[x - 40][y - 20].type!=7)
+	{
+		board[x][y].type = 7; return 1;
+	}
+	else board[x][y].type = 7; return 0;
+	//+ - 40픽셀 내에서 원하는 위치를 찾는다
+}
+void search2(int x, int y)
+{
+
+
 }
