@@ -1,7 +1,6 @@
 
 // LogicView.cpp : CLogicView 클래스의 구현
 //
-
 #include "stdafx.h"
 // SHARED_HANDLERS는 미리 보기, 축소판 그림 및 검색 필터 처리기를 구현하는 ATL 프로젝트에서 정의할 수 있으며
 // 해당 프로젝트와 문서 코드를 공유하도록 해 줍니다.
@@ -19,11 +18,30 @@
 #define and 1
 #define or 2
 #define not 3
+typedef struct BOARD{
+	int type;
+	int face;
+}Board;
+typedef struct UNIT{
+	int type; //타입
+	int pointx;
+	int pointy;//좌표
+	int state;//상태
+	int gate1;
+	int gate2;
+	int clk;
+	int output1;
+	int output2;
+}unit;//실행용 스트럭트
+class electric : public CPtrList{
+private :
+	unit Unit;
 
 
+};
 
 
-int board[1200][800] = {0,};
+Board board[1200][800] = {0,};//좌표 추적용 보드
 // CLogicView
 
 IMPLEMENT_DYNCREATE(CLogicView, CView)
@@ -166,15 +184,15 @@ void CLogicView::OnLButtonDown(UINT nFlags, CPoint point)
 
 			if (button1 == 1 ){
 				button1 = 0;
-				board[box(point.x)][box(point.y)] = 1;
+				board[box(point.x)][box(point.y)].type = 1;
 			}
 			if (button2 == 1){
 				button2 = 0;
-				board[box(point.x)][box(point.y)] = 2;
+				board[box(point.x)][box(point.y)].type = 2;
 			}
 			if (button3 == 1){
 				button3 = 0;
-				board[box(point.x)][box(point.y)] = 3;
+				board[box(point.x)][box(point.y)].type = 3;
 			}
 			if (button4 == 1){
 				dc.TransparentBlt(point.x, point.y, bmpinfo4.bmWidth, bmpinfo4.bmHeight, &dcmem4, 0, 0, bmpinfo4.bmWidth, bmpinfo4.bmHeight, RGB(255, 255, 255));
@@ -201,7 +219,7 @@ void CLogicView::OnLButtonDown(UINT nFlags, CPoint point)
 	for (i = 0; i < 1200; i++){
 		for (j = 0; j < 800; j++)
 		{
-			switch (board[i][j]){
+			switch (board[i][j].type){
 			case 0: break;
 			case 1: dc.TransparentBlt(i, j, bmpinfo1.bmWidth, bmpinfo1.bmHeight, &dcmem1, 0, 0, bmpinfo1.bmWidth, bmpinfo1.bmHeight, RGB(255, 255, 255)); break;
 			case 2: dc.TransparentBlt(i,j, bmpinfo2.bmWidth, bmpinfo2.bmHeight, &dcmem2, 0, 0, bmpinfo2.bmWidth, bmpinfo2.bmHeight, RGB(255, 255, 255)); break;
